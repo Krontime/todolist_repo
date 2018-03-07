@@ -15,7 +15,7 @@ def get_todo_page(request):
     
     form = TodoItemForm()
     items = TodoItem.objects.all()
-    return render(request, "todoapp/todolist.html", {'items': items, 'form': form})
+    return render(request, "todoapp/index.html", {'items': items, 'form': form})
 
 def edit_todo_item(request, id):
     item = get_object_or_404(TodoItem, pk=id)
@@ -34,7 +34,7 @@ def edit_todo_item(request, id):
 def delete_todo_item(request, id):
     item = get_object_or_404(TodoItem, pk=id)
     item.delete()
-    return redirect("/")
+    return redirect("todo_index")
 
 def toggle_todo_item(request, id):
     item = get_object_or_404(TodoItem, pk=id)
@@ -43,4 +43,4 @@ def toggle_todo_item(request, id):
     else:
         item.done = True
     item.save()
-    return redirect("/")
+    return redirect("todo_index")

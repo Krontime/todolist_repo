@@ -13,15 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
-from todoapp.views import get_todo_page
-from todoapp.views import delete_todo_item, toggle_todo_item, edit_todo_item
+
+import todoapp.urls as todo_urls
+import home.views as home_views
+import comments.urls as comments_urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', get_todo_page),
-    url(r'^delete/(\d+)$', delete_todo_item),
-    url(r'^toggle/(\d+)$', toggle_todo_item),
-    url(r'^edit/(\d+)$', edit_todo_item),
+
+
+    url(r'^$', home_views.get_index, name='home'),
+
+
+    url(r'^comments', include(comments_urls)),
+
+
+    url(r'^todo/', include(todo_urls)),
 ]
